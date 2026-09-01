@@ -87,7 +87,11 @@ _Кандидаты в Figma variables. До сверки с Figma-файлом 
 
 ## Сетка и отступы
 
-_Шкала отступов с прототипа ещё не снята (сняты только радиусы) — см. фронт работ._
+Снято с прототипа на вьюпорте 1440 (значения fluid → нормализованы к 4px-сетке, решение 2026-09-01):
+
+- **Макет 1440:** сайдбар-навигация 264 → контент 1128 (паддинг main 24) → две колонки: основная 760 + правый рейл 344, gap 24. Layout-токены: `layout/sidebar·content·col-main·col-rail` (`VariableID:4207:11…14`).
+- **Шкала отступов** `space/*` в Dimension (`VariableID:4207:2…10`): 2xs 4 · xs 8 · sm 12 · md 16 · lg 20 · xl 24 · 2xl 28 · 3xl 32 · 4xl 40. Scope GAP.
+- **Карточки прототипа:** обычная — radius lg(22), pad lg(20); hero — radius xl(28), pad 2xl(28), фон brand/ink.
 
 - **Радиусы** — коллекция `Dimension` (`VariableCollectionId:4205:29`, mode Default): `radius/xs` 10 · `sm` 14 · `md` 18 · `lg` 22 · `xl` 28 · `pill` 999; `size/tap-target` 44. IDs `VariableID:4205:30…36`. Scope: CORNER_RADIUS (tap-target — WIDTH_HEIGHT). Code syntax WEB = css-переменные прототипа.
 
@@ -121,7 +125,16 @@ _Шкала отступов с прототипа ещё не снята (сн�
 
 ## Компоненты
 
-_Заполнить: список компонентов с node-id и вариантами. Всё, что повторяется дважды, — сюда._
+_Живут на «01 System» (Starter не даёт страницу-на-компонент). Всё, что повторяется дважды, — сюда._
+
+| Компонент | Node ID | Варианты / свойства | Заметки |
+|---|---|---|---|
+| Badge | `4208:14` | Tone: Neutral/Brand/AI/Teal/Amber/Rose; prop `Label` (TEXT) | pill, фон `*-tint` + текст акцента, стиль Overline UPPER, паддинги space/2xs·xs |
+| Button | `4209:15` | Style: Primary/Secondary/Ghost × Size: Md(44)/Sm(40); prop `Label` | Primary — brand pill; Secondary — bg/card + бордер line, radius/xs; Ghost — текст brand, radius/xs; паддинги space/lg·md |
+| ProgressBar | `4210:8` | Surface: Default/Inverse | 8px pill; Track stretch / Fill min — процент задаётся шириной Fill; Inverse (белый 16%) для тёмных hero |
+| Avatar | `4210:14` | Size: Sm(32)/Md(40); prop `Initials` | сквиркл radius/xs, фон переопределяется на инстансе, стиль Avatar/Initials (Bricolage Bold 14/20) |
+
+Библиотеки файла (Material 3, Simple DS, Apple-киты, team colors) — **не используем**: их токен-модели несовместимы с нашими коллекциями (решение по матрице reuse: rebuild).
 
 ## Анатомия секций
 
@@ -152,8 +165,11 @@ _Заполнить: устройство повторяющихся секци�
 - [x] Решить с владельцем расхождения прототип↔бриф — **решено 2026-09-01**: 2 активных курса, английский язык, каталог и push вне MVP (см. «Принятые решения»).
 - [x] Определить структуру страниц в Figma — **сделано 2026-09-01**: 01 System / 02 Core Flow / Scraps (см. «Структура Figma-файла»).
 - [x] Зафиксировать цвета, типографику, радиусы, тени — **сделано 2026-09-01**: коллекции Color (22) и Dimension (7), 11 text styles, 2 effect styles (см. разделы «Цвета», «Типографика»).
-- [ ] Снять с прототипа шкалу отступов и контейнер/сетку (gap, padding, ширина контента) → коллекция `spacing` в Dimension.
-- [ ] Спроектировать core flow на «02 Core Flow»: Dashboard → Course → Lesson → Assignment → Submission → Feedback. Начать с Dashboard; компоненты (карточка курса, статус-бейдж, строка урока, пайплайн задания, карточка события, карточка ментора) — на «01 System».
+- [x] Снять шкалу отступов и сетку — **сделано 2026-09-01**: space/* и layout/* в Dimension (см. «Сетка и отступы»).
+- [x] Атомы — **сделано 2026-09-01**: Badge, Button, ProgressBar, Avatar на «01 System» (см. «Компоненты»); добавлен токен `text/on-brand` (`VariableID:4209:2`), стиль Avatar/Initials.
+- [ ] Молекулы для Dashboard: карточка курса (прогресс+ментор+next action), hero-карточка next action, строка «требует внимания», карточка события расписания, карточка ментора, сайдбар-навигация.
+- [ ] Собрать Dashboard на «02 Core Flow» (1440, сайдбар 264 + 760/344).
+- [ ] Дальше по core flow: Course → Lesson → Assignment (пайплайн статусов — компонент).
 - [ ] Спроектировать empty states (в прототипе не показаны — бриф §39).
 
 ## Грабли Figma
