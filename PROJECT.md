@@ -133,6 +133,8 @@ _Живут на «01 System» (Starter не даёт страницу-на-ко
 | Button | `4209:15` | Style: Primary/Secondary/Ghost × Size: Md(44)/Sm(40); prop `Label` | Primary — brand pill; Secondary — bg/card + бордер line, radius/xs; Ghost — текст brand, radius/xs; паддинги space/lg·md |
 | ProgressBar | `4210:8` | Surface: Default/Inverse | 8px pill; Track stretch / Fill min — процент задаётся шириной Fill; Inverse (белый 16%) для тёмных hero |
 | Avatar | `4210:14` | Size: Sm(32)/Md(40); prop `Initials` | сквиркл radius/xs, фон переопределяется на инстансе, стиль Avatar/Initials (Bricolage Bold 14/20) |
+| NavItem | `4212:9` | State: Active/Default; props `Label`, `ShowCounter`, `Count` | для тёмного сайдбара (brand/ink): h44, radius/sm, ширина 216 (264 − 2×24); Active = белый 14% фон; Default = text/on-brand-muted |
+| CourseCard | `4213:2` | props через вложенные инстансы (Badge/Button `Label`) | 368w, bg/card + бордер line, radius/lg, pad lg; структура: eyebrow Overline → Title Heading/S → ProgressBar+% → meta → Badge+next action → Primary Sm + Ghost Sm. ⚠️ на скриншоте снизу мелькнул синий артефакт — структура чистая, перепроверить изолированным рендером при следующем сеансе |
 
 Библиотеки файла (Material 3, Simple DS, Apple-киты, team colors) — **не используем**: их токен-модели несовместимы с нашими коллекциями (решение по матрице reuse: rebuild).
 
@@ -167,7 +169,10 @@ _Заполнить: устройство повторяющихся секци�
 - [x] Зафиксировать цвета, типографику, радиусы, тени — **сделано 2026-09-01**: коллекции Color (22) и Dimension (7), 11 text styles, 2 effect styles (см. разделы «Цвета», «Типографика»).
 - [x] Снять шкалу отступов и сетку — **сделано 2026-09-01**: space/* и layout/* в Dimension (см. «Сетка и отступы»).
 - [x] Атомы — **сделано 2026-09-01**: Badge, Button, ProgressBar, Avatar на «01 System» (см. «Компоненты»); добавлен токен `text/on-brand` (`VariableID:4209:2`), стиль Avatar/Initials.
-- [ ] Молекулы для Dashboard: карточка курса (прогресс+ментор+next action), hero-карточка next action, строка «требует внимания», карточка события расписания, карточка ментора, сайдбар-навигация.
+- [ ] **БЛОКЕР (до сброса лимита):** Figma MCP на Starter-плане исчерпал квоту вызовов инструментов — писать в файл нельзя. Подождать сброса лимита либо апгрейдить план.
+- [x] Молекулы, часть 1 — **сделано 2026-09-01**: NavItem `4212:9`, CourseCard `4213:2`; новые токены `text/on-brand` `4209:2`, `text/on-brand-muted` `4212:2`.
+- [ ] Перепроверить CourseCard изолированным скриншотом (см. ⚠️ в таблице компонентов).
+- [ ] Молекулы, часть 2: hero-карточка next action, EventRow (расписание), AttentionRow («ещё требует внимания»), MentorCard.
 - [ ] Собрать Dashboard на «02 Core Flow» (1440, сайдбар 264 + 760/344).
 - [ ] Дальше по core flow: Course → Lesson → Assignment (пайплайн статусов — компонент).
 - [ ] Спроектировать empty states (в прототипе не показаны — бриф §39).
@@ -186,10 +191,14 @@ _Дописывать всё, на что наткнёмся._
 - Starter-план: максимум **3 страницы** в файле и **1 режим** в коллекции переменных — dark mode и разбиение на много страниц недоступны без апгрейда.
 - **Inter Tight в Figma недоступен** — body везде Inter. У JetBrains Mono нет начертания SemiBold — для w600 использовать Medium (или Bold).
 - Стиль Inter — «Semi Bold» с пробелом, не «SemiBold» (у Bricolage наоборот: «SemiBold» слитно).
+- Starter-план лимитирует и **количество вызовов Figma MCP** — при активной стройке квота кончается за один длинный сеанс; работать крупными шагами (меньше промежуточных скриншотов), состояние вести в PROJECT.md, чтобы продолжать после сброса.
+- Скриншот ноды по умолчанию рендерит и перекрывающий контент соседей — для проверки компонента использовать `contentsOnly: true`.
 
 _Каждая сессия заканчивается обновлением этого файла._
 
 ## Журнал изменений
+
+- **2026-09-01 (сессия 2, атомы и молекулы)** — сняты и нормализованы отступы/сетка прототипа (вьюпорт 1440): space/* (4px-сетка) и layout/* добавлены в Dimension. Построены компоненты: Badge (6 тонов), Button (3×2), ProgressBar (2 поверхности), Avatar (2 размера), NavItem (2 состояния), CourseCard; новые токены text/on-brand и text/on-brand-muted, стиль Avatar/Initials. Библиотеки файла (M3, Simple DS, Apple) отклонены — несовместимые токен-модели. Сеанс прерван лимитом вызовов Figma MCP на Starter-плане; фактура hero/сайдбара/карточек снята с прототипа и записана — молекулы части 2 можно строить сразу после сброса лимита.
 
 - **2026-09-01 (сессия 2, Figma подключена)** — снято состояние файла: он был пуст. Заложен фундамент: 3 страницы (01 System `0:1`, 02 Core Flow `4205:4`, Scraps `4205:5`); коллекция Color — 22 переменные из токенов прототипа со scope и code syntax; коллекция Dimension — 6 радиусов + tap-target; 11 text styles (шкала снята с прототипа, нормализована; Inter вместо недоступного Inter Tight); 2 effect styles теней. Новые грабли: лимиты Starter-плана, отсутствие Inter Tight и JetBrains Mono SemiBold. Открыто: шкала отступов с прототипа ещё не снята.
 
