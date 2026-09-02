@@ -107,7 +107,7 @@ _Кандидаты в Figma variables. До сверки с Figma-файлом 
 Paint-стиль `Ring/58` — коническое кольцо прогресса (brand до 58%, дальше paper-2, от 12 часов; из conic-gradient прототипа). Новый text style `Mono/Stat L` (JetBrains Bold 48/52 −3%) для крупных процентов на обложках.
 
 Paint-стили чипа когорты (пре-блендед поверх обложек): `Chip/Brand` #6B64E9 + `Chip/Brand Border` #9590EF; `Chip/Ocean` #32769D + `Chip/Ocean Border` #6D9DB9 — свапаются на инстансе вместе со стилем Cover.
-- `border/line`, `border/line-soft`
+- `border/line`, `border/line-soft`, `border/on-brand` (#787693 — белый 40% поверх brand-ink, пре-блендед)
 - `text/primary`, `text/secondary`, `text/muted`
 - `brand/primary`, `brand/deep`, `brand/ink`, `brand/tint`, `brand/tint-2`
 - `accent/ai`, `accent/teal`, `accent/amber`, `accent/rose` — каждый с парным `*-tint`
@@ -143,14 +143,14 @@ _Живут на «01 System» (Starter не даёт страницу-на-ко
 | Компонент | Node ID | Варианты / свойства | Заметки |
 |---|---|---|---|
 | Badge | `4208:14` | Tone: Neutral/Brand/AI/Teal/Amber/Rose; prop `Label` (TEXT) | pill, фон `*-tint` + текст акцента, стиль Overline UPPER, паддинги space/2xs·xs |
-| Button | `4209:15` | Style: Primary/Secondary/Ghost × Size: Md(44)/Sm(40); prop `Label` | Primary — brand pill; Secondary — bg/card + бордер line, radius/xs; Ghost — текст brand, radius/xs; паддинги space/lg·md |
+| Button | `4209:15` | Style: Primary/Secondary/Ghost/Inverse/InverseOutline × Size: Md(44)/Sm(40); prop `Label` | Primary — brand pill; Secondary — bg/card + бордер line, radius/xs; Ghost — текст brand, radius/xs; паддинги space/lg·md |
 | ProgressBar | `4210:8` | Surface: Default/Inverse | 8px pill; Track stretch / Fill min — процент задаётся шириной Fill; Inverse (белый 16%) для тёмных hero |
 | Avatar | `4210:14` | Size: Sm(32)/Md(40); prop `Initials` | сквиркл radius/xs, фон переопределяется на инстансе, стиль Avatar/Initials (Bricolage Bold 14/20) |
 | NavItem | `4212:9` | State: Active/Default; props `Label`, `ShowCounter`, `Count` | для тёмного сайдбара (brand/ink): h44, radius/sm, ширина 216 (264 − 2×24); Active = белый 14% фон; Default = text/on-brand-muted |
 | CourseCard | `4213:2` | props через вложенные инстансы (Badge/Button `Label`, ProgressBar `Percent`); стиль Cover свапается на инстансе | 368w (FILL в сетке), pad карточки 0: **Cover 150px во всю ширину** (paint-стиль Cover/*, верхние углы radius/lg) с чипом когорты (белый 16% + бордер 40%, текст Overline on-brand) и белым заголовком Heading/S; ниже Content (pad lg): ProgressBar+% → meta → Badge+next action → кнопки. Перестроено 2026-09-01 по référence владельца |
 | EventRow | `4218:7` | props `Time`, `Title`, `Meta`, `ShowBadge` + swap тона Badge | строка расписания 304w: время слева, заголовок+мета, статус-бейдж справа |
 | AttentionRow | `4218:14` | props `Title`, `Meta` + Avatar `Initials`/fill | мини-карточка 712w (bg/card, бордер line-soft, radius/md, pad md): аватар курса + действие + мета + шеврон › справа. Перестроено 2026-09-01 по референсу |
-| MentorCard | `4218:20` | props `Name`, `Role`, `Note` | 344w (rail), **обложка Surface/Hero** (radius/lg сверху) с аватаром, белым именем и on-brand-muted ролью; ниже Content (pad lg): заметка + Secondary Sm + Ghost Sm |
+| MentorCard | `4218:20` | props `Name`, `Role`, `Note` | 344w (rail), **вся карточка на Surface/Hero** (по референсу владельца): аватар + белое имя + on-brand-muted роль и заметка; кнопки Inverse Sm «Message mentor» + InverseOutline Sm «Ask the cohort» |
 | Sidebar | `4229:108` | nested: свап State у NavItem, лейблы, счётчик | компонентизирован из дашборда; на каждом экране инстанс, активный пункт свапается |
 | LessonRow | `4230:43` | State: Done/InProgress/NotStarted/Locked; props `Title`, `Meta`, `Num` | 720w, индикатор-кружок (галка/номер/тире), мета = статус ◦ длительность |
 | ModuleCard | `4231:23` | props `Week`,`Title`,`Desc`,`Meta`,`ShowAssignment`,`AssignmentText`; своп Badge и LessonRow | 760w: шапка недели + бейдж, дивайдер, 3 LessonRow, полоса задания (bg/card-2) |
@@ -210,7 +210,7 @@ _Заполнить: устройство повторяющихся секци�
 - [x] **Lesson собран** — `4245:335` (2026-09-01); новый компонент Tab `4245:44`.
 - [ ] Дальше по core flow: **Assignment** (пайплайн статусов — компонент AssignmentPipeline, отзыв ментора «Что получилось / Что мешает / Что сделать», рабочая область, история версий).
 - [x] Глубина/градиенты — **сделано 2026-09-01**: paint-стили Surface/Hero, Cover/Brand, Cover/Ocean; Cover-полоса в CourseCard; специмен Depth в Foundations (`4248:395`).
-- [x] Кольцо прогресса — **сделано 2026-09-01** в карточке Progress на Course (стиль Ring/58, дырка bg/card, 56px). Осталось: компонентизировать ProgressRing с вариантами процентов, когда появится второе использование (правило 6).
+- [x] Кольцо прогресса — **сделано 2026-09-01** в карточке Progress на Course (стиль Ring/58, 56px); линейный бар из Progress удалён по указанию владельца — только кольцо. Компонентизировать ProgressRing при втором использовании (правило 6).
 - [x] Мини-календарь — **сделано 2026-09-01**: компонент CalendarDay `4252:46` + сборка в rail дашборда (сентябрь 2026, события 2/3/5 брендом, сегодня — ink). Экраны Course/Lesson сдвинуты вниз на 110 (дашборд подрос).
 - [ ] Спроектировать empty states (в прототипе не показаны — бриф §39).
 - [x] Аудит правила 7 по всему файлу — **сделано 2026-09-01**: 8 лейблов Badge были отвязаны от стиля (textCase после привязки — см. грабли) → Overline теперь UPPER, тексты перепривязаны; «Section head» у Needs attention переведён на FILL. Повторный аудит: 0 несвязанных текстов, 0 HUG-заголовков, 0 фреймов без auto-layout.
@@ -244,6 +244,8 @@ _Дописывать всё, на что наткнёмся._
 _Каждая сессия заканчивается обновлением этого файла._
 
 ## Журнал изменений
+
+- **2026-09-01 (сессия 2, правки по референсам)** — стат обложки курса: контент по центру, линия-разделитель ужата до высоты «58+COMPLETE» (77px, FILL). Из Progress удалён линейный бар — осталось кольцо. MentorCard полностью на Surface/Hero по референсу: светлая заметка, кнопки Inverse + новый вариант **InverseOutline** (прозрачная pill с бордером border/on-brand — новый пре-блендед токен). Инстансы на всех трёх экранах проверены.
 
 - **2026-09-01 (сессия 2, правки обложки курса и rail)** — владелец руками изменил размер обложки Course (принято, записано в «Правки владельца»); блок процента перестроен: вертикальная линия-разделитель + «58» крупно (новый стиль Mono/Stat L) + «%» меньше + COMPLETE, по центру высоты. В Progress добавлено коническое кольцо (paint-стиль Ring/58) вместо крупного текста. MentorCard получил тёмную обложку Surface/Hero с шапкой. Кнопки на всех инстансах ментора проверены — целы.
 
