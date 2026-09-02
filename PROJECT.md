@@ -147,7 +147,7 @@ _Живут на «01 System» (Starter не даёт страницу-на-ко
 | ProgressBar | `4210:8` | Surface: Default/Inverse | 8px pill; Track stretch / Fill min — процент задаётся шириной Fill; Inverse (белый 16%) для тёмных hero |
 | Avatar | `4210:14` | Size: Sm(32)/Md(40); prop `Initials` | сквиркл radius/xs, фон переопределяется на инстансе, стиль Avatar/Initials (Bricolage Bold 14/20) |
 | NavItem | `4212:9` | State: Active/Default; props `Label`, `ShowCounter`, `Count` | для тёмного сайдбара (brand/ink): h44, radius/sm, ширина 216 (264 − 2×24); Active = белый 14% фон; Default = text/on-brand-muted |
-| CourseCard | `4213:2` | props через вложенные инстансы (Badge/Button `Label`, ProgressBar `Percent`); стиль Cover свапается на инстансе | 368w (FILL в сетке), pad карточки 0: **Cover 150px во всю ширину** (paint-стиль Cover/*, верхние углы radius/lg) с чипом когорты (белый 16% + бордер 40%, текст Overline on-brand) и белым заголовком Heading/S; ниже Content (pad lg): ProgressBar+% → meta → Badge+next action → кнопки. Перестроено 2026-09-01 по référence владельца |
+| CourseCard | `4213:2` | props через вложенные инстансы (Badge/Button `Label`, ProgressBar `Percent`); стиль Cover свапается на инстансе; кнопки: Primary Sm + **Secondary Sm «Programme»** | 368w (FILL в сетке), pad карточки 0: **Cover 150px во всю ширину** (paint-стиль Cover/*, верхние углы radius/lg) с чипом когорты (белый 16% + бордер 40%, текст Overline on-brand) и белым заголовком Heading/S; ниже Content (pad lg): ProgressBar+% → meta → Badge+next action → кнопки. Перестроено 2026-09-01 по référence владельца |
 | EventRow | `4218:7` | props `Time`, `Title`, `Meta`, `ShowBadge` + swap тона Badge | строка расписания 304w: время слева, заголовок+мета, статус-бейдж справа |
 | AttentionRow | `4218:14` | props `Title`, `Meta` + Avatar `Initials`/fill | мини-карточка 712w (bg/card, бордер line-soft, radius/md, pad md): аватар курса + действие + мета + шеврон › справа. Перестроено 2026-09-01 по референсу |
 | MentorCard | `4218:20` | props `Name`, `Role`, `Note` | 344w (rail), **вся карточка на Surface/Hero** (по референсу владельца): аватар + белое имя + on-brand-muted роль и заметка; кнопки Inverse Sm «Message mentor» + InverseOutline Sm «Ask the cohort» |
@@ -246,6 +246,8 @@ _Дописывать всё, на что наткнёмся._
 _Каждая сессия заканчивается обновлением этого файла._
 
 ## Журнал изменений
+
+- **2026-09-01 (сессия 2, формы кнопок)** — по референсу владельца: кнопки MentorCard переведены с pill на прямоугольные radius/sm (оверрайд радиуса на мастере — белые CTA на обложках остаются pill, как в прототипе); «Open assignment» в Next Up сменена с Primary-pill на Secondary (белая с бордером, как «Открыть задание» на картинке); «Programme» на карточках курса главной — теперь Secondary с границей (свап в мастере CourseCard, лейблы инстансов проверены).
 
 - **2026-09-01 (сессия 2, модули по референсу)** — снята полная анатомия модуля со страницы курса прототипа; LessonRow перестроен в мини-карточку (индикатор 28 с тинтом, статус под тайтлом, чип длительности + шеврон, новый prop Duration); ModuleCard получил индикатор недели 48, чипы меты (Meta→чип уроков + новый prop Load) и кнопку «Open» (Secondary Sm — радиусы кнопок сверены с прототипом, всё совпадает). Все 4 модуля на Course обновлены оверрайдами. Новая грабля: чёрная база пейнта под привязкой может рендериться чёрной — всегда передавать реальный цвет.
 
